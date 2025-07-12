@@ -1,0 +1,17 @@
+setuptools
+pandas
+numpy
+scikit-learn
+matplotlib
+seaborn
+python-dotenv
+python-box==6.0.2
+notebook
+ipykernel
+pyYAML
+ensure==1.0.2
+joblib
+types-pyYAML
+Flask
+Flask-Cors
+-e .
