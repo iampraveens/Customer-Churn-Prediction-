@@ -1,1 +1,2 @@
-key: value
+DataTransformation:
+  balancing_method: 'ADASYN'  # Options: 'SMOTEENN', 'ADASYN'

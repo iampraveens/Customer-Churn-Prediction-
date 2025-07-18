@@ -3,6 +3,7 @@ from CustomerChurn.utils.common import read_yaml, create_directories
 from CustomerChurn.entity.config_entity import DataIngestionConfig
 from CustomerChurn.entity.config_entity import DataValidationConfig
 from CustomerChurn.entity.config_entity import DataPreprocessingConfig
+from CustomerChurn.entity.config_entity import DataTransformationConfig
 
 class ConfigurationManager:
     def __init__(
@@ -108,3 +109,17 @@ class ConfigurationManager:
         )
         
         return data_preprocessing_config
+    
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        config = self.config.data_transformation
+        params = self.params.DataTransformation
+
+        create_directories([config.root_dir])
+
+        data_transformation_config = DataTransformationConfig(
+            root_dir=config.root_dir,
+            data_path=config.data_path,
+            balancing_method=params.balancing_method
+        )
+
+        return data_transformation_config
