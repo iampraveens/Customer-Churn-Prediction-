@@ -2,6 +2,8 @@ setuptools
 pandas
 numpy
 scikit-learn
+xgboost
+imbalance-learn
 matplotlib
 seaborn
 python-dotenv
