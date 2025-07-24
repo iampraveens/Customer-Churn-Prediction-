@@ -5,6 +5,7 @@ from CustomerChurn.entity.config_entity import DataValidationConfig
 from CustomerChurn.entity.config_entity import DataPreprocessingConfig
 from CustomerChurn.entity.config_entity import DataTransformationConfig
 from CustomerChurn.entity.config_entity import ModelTrainerConfig
+from CustomerChurn.entity.config_entity import ModelEvaluationConfig
 
 class ConfigurationManager:
     def __init__(
@@ -156,3 +157,32 @@ class ConfigurationManager:
         )
 
         return model_trainer_config
+    
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        """
+        Retrieves and constructs the model evaluation configuration.
+
+        This method reads the model evaluation part of the configuration file, 
+        ensures the necessary directories are created, and returns a 
+        ModelEvaluationConfig object with the relevant settings.
+
+        Returns:
+            ModelEvaluationConfig: An object containing configuration settings 
+            such as root directory, test data path, model path, metric file name, 
+            and target column for model evaluation.
+        """
+        config = self.config.model_evaluation
+        schema =  self.schema.TARGET_COLUMN
+
+        create_directories([config.root_dir])
+
+        model_evaluation_config = ModelEvaluationConfig(
+            root_dir=config.root_dir,
+            test_data_path=config.test_data_path,
+            model_path = config.model_path,
+            metric_file_name = config.metric_file_name,
+            target_column = schema.name
+           
+        )
+
+        return model_evaluation_config
