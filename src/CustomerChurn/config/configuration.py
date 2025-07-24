@@ -4,6 +4,7 @@ from CustomerChurn.entity.config_entity import DataIngestionConfig
 from CustomerChurn.entity.config_entity import DataValidationConfig
 from CustomerChurn.entity.config_entity import DataPreprocessingConfig
 from CustomerChurn.entity.config_entity import DataTransformationConfig
+from CustomerChurn.entity.config_entity import ModelTrainerConfig
 
 class ConfigurationManager:
     def __init__(
@@ -123,3 +124,35 @@ class ConfigurationManager:
         )
 
         return data_transformation_config
+    
+    def get_model_trainer_config(self) -> ModelTrainerConfig:
+        """
+        Retrieves and constructs the model trainer configuration.
+
+        This method reads the model trainer part of the configuration file, 
+        ensures the necessary directories are created, and returns a 
+        ModelTrainerConfig object with the relevant settings.
+
+        Returns:
+            ModelTrainerConfig: An object containing configuration settings 
+            such as root directory, train data path, test data path, model name, 
+            target column, and model type for model training.
+        """
+        config = self.config.model_trainer
+        model_type = self.params.ModelTrainer.model  
+        model_params = self.params[model_type]             
+        schema = self.schema.TARGET_COLUMN
+
+        create_directories([config.root_dir])
+
+        model_trainer_config = ModelTrainerConfig(
+            root_dir=config.root_dir,
+            train_data_path=config.train_data_path,
+            test_data_path=config.test_data_path,
+            model_name=config.model_name,
+            target_column=schema.name,
+            model=model_type,
+            params=model_params
+        )
+
+        return model_trainer_config

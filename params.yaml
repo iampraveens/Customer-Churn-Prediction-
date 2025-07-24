@@ -1,2 +1,23 @@
 DataTransformation:
   balancing_method: 'ADASYN'  # Options: 'SMOTEENN', 'ADASYN'
+
+ModelTrainer:
+  model: 'LogisticRegression'  # Options: 'LogisticRegression', 'RandomForestClassifier', 'XGBClassifier'
+
+LogisticRegression:
+  max_iter: 1000
+
+RandomForestClassifier:
+  n_estimators: 315
+  max_depth: 19
+  min_samples_split: 3
+  min_samples_leaf: 1
+  max_features: 'sqrt'
+  criterion: 'entropy'
+
+XGBClassifier:
+  max_depth: 10 
+  learning_rate: 0.06517838060960084 
+  n_estimators: 422
+  subsample: 0.7885747276805473
+  colsample_bytree: 0.5176388977959004
