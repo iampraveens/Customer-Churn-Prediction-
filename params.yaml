@@ -2,7 +2,7 @@ DataTransformation:
   balancing_method: 'SMOTEENN'  # Options: 'SMOTEENN', 'ADASYN'
 
 ModelTrainer:
-  model: 'XGBClassifier'  # Options: 'LogisticRegression', 'RandomForestClassifier', 'XGBClassifier'
+  model: 'LogisticRegression'  # Options: 'LogisticRegression', 'RandomForestClassifier', 'XGBClassifier'
 
 LogisticRegression:
   max_iter: 1000
