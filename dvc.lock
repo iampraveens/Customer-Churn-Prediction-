@@ -62,8 +62,8 @@ stages:
       size: 899834
     - path: params.yaml
       hash: md5
-      md5: e9f852786cf97b5ad8587a27e265c2f1
-      size: 578
+      md5: f7405ceb0a0852af8d642390411234e8
+      size: 582
     - path: src/CustomerChurn/pipeline/stage_04_data_transformation.py
       hash: md5
       md5: e0842d75e72e8764d2b4dbb325eefcb8
@@ -71,27 +71,27 @@ stages:
     outs:
     - path: artifacts/data_transformation/test.csv
       hash: md5
-      md5: e693f2ea95a1a724186ae71d308ed5cb
-      size: 142004
+      md5: fc70d4f1ccfd697f5ef5b4ee967f6344
+      size: 142473
     - path: artifacts/data_transformation/train.csv
       hash: md5
-      md5: 08f81d09fcceb5d9550c25791821c0d6
-      size: 563391
+      md5: b2abb21513bb1d61f0c44b3e7872dd2a
+      size: 565201
   model_trainer:
     cmd: python -m CustomerChurn.pipeline.stage_05_model_trainer
     deps:
     - path: artifacts/data_transformation/test.csv
       hash: md5
-      md5: e693f2ea95a1a724186ae71d308ed5cb
-      size: 142004
+      md5: fc70d4f1ccfd697f5ef5b4ee967f6344
+      size: 142473
     - path: artifacts/data_transformation/train.csv
       hash: md5
-      md5: 08f81d09fcceb5d9550c25791821c0d6
-      size: 563391
+      md5: b2abb21513bb1d61f0c44b3e7872dd2a
+      size: 565201
     - path: params.yaml
       hash: md5
-      md5: e9f852786cf97b5ad8587a27e265c2f1
-      size: 578
+      md5: f7405ceb0a0852af8d642390411234e8
+      size: 582
     - path: src/CustomerChurn/pipeline/stage_05_model_trainer.py
       hash: md5
       md5: 5195577c086d808e139abe9057a27979
@@ -99,19 +99,19 @@ stages:
     outs:
     - path: artifacts/model_trainer/model.joblib
       hash: md5
-      md5: ac9bf42aa750ed38dd176506f29b0606
-      size: 1839
+      md5: 68d955503765b446bcf5bbe849c18319
+      size: 14818649
   model_evaluation:
     cmd: python -m CustomerChurn.pipeline.stage_06_model_evaluation
     deps:
     - path: artifacts/data_transformation/test.csv
       hash: md5
-      md5: e693f2ea95a1a724186ae71d308ed5cb
-      size: 142004
+      md5: fc70d4f1ccfd697f5ef5b4ee967f6344
+      size: 142473
     - path: artifacts/model_trainer/model.joblib
       hash: md5
-      md5: ac9bf42aa750ed38dd176506f29b0606
-      size: 1839
+      md5: 68d955503765b446bcf5bbe849c18319
+      size: 14818649
     - path: src/CustomerChurn/pipeline/stage_06_model_evaluation.py
       hash: md5
       md5: 44e8dd308df469a42bd7a35ee24c74fb
@@ -119,13 +119,13 @@ stages:
     outs:
     - path: artifacts/model_evaluation/confusion_matrix.png
       hash: md5
-      md5: bf437cc0039cefb1f6d66e2bc20d054f
-      size: 16692
+      md5: 2e0de18fe76a087a33caaa81f59d0a68
+      size: 16981
     - path: artifacts/model_evaluation/metrics.json
       hash: md5
-      md5: e5ae9cfe3f7181f822fdd3aa2fddae6f
-      size: 154
+      md5: b5353217f0471ac8a9eacfa98e56c049
+      size: 155
     - path: artifacts/model_evaluation/roc_curve.png
       hash: md5
-      md5: 6c73aba054cef5b9cee1715ffe032a2d
-      size: 20848
+      md5: e4784c99610c719d4a0a0937d00c6312
+      size: 21883
