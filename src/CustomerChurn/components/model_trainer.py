@@ -1,18 +1,22 @@
 import pandas as pd 
 import os
 import joblib
+import mlflow
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 from CustomerChurn import logger
 from CustomerChurn.entity.config_entity import ModelTrainerConfig
 from CustomerChurn.utils.common import read_yaml
+from CustomerChurn.utils.mlflow import setup_mlflow
 
 class ModelTrainer:
     def __init__(self, config: ModelTrainerConfig):
         self.config = config
         
     def train(self):
+        setup_mlflow()
+
         train_data = pd.read_csv(self.config.train_data_path)
         test_data = pd.read_csv(self.config.test_data_path)
 
@@ -46,7 +50,13 @@ class ModelTrainer:
         else:
             raise ValueError(f"Invalid model name: {model_name}")
 
-        logger.info(f"Training {model_name} model with parameters: {params}")   
-        model.fit(X_train, y_train)
-        joblib.dump(model, os.path.join(self.config.root_dir, self.config.model_name))
-        logger.info(f"{model_name} model trained and saved successfully.")
+        logger.info(f"Training {model_name} model with parameters: {params}")  
+
+        with mlflow.start_run():
+            model.fit(X_train, y_train)
+            joblib.dump(model, os.path.join(self.config.root_dir, self.config.model_name))
+            logger.info(f"{model_name} model trained and saved successfully.")
+
+            mlflow.log_param("chosen_model", model_name)
+            mlflow.log_param("train_rows", len(X_train))
+            mlflow.log_param("test_rows", len(X_test))

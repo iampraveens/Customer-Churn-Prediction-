@@ -1,0 +1,56 @@
+stages:
+  data_ingestion:
+    cmd: python -m CustomerChurn.pipeline.stage_01_data_ingestion
+    deps:
+      - src/CustomerChurn/pipeline/stage_01_data_ingestion.py
+      - config/config.yaml
+    outs:
+      - artifacts/data_ingestion
+
+  data_validation:
+    cmd: python -m CustomerChurn.pipeline.stage_02_data_validation
+    deps:
+      - src/CustomerChurn/pipeline/stage_02_data_validation.py
+      - artifacts/data_ingestion/telcoChurn.csv
+      - schema.yaml
+    outs:
+      - artifacts/data_validation/status.txt
+
+  data_preprocessing:
+    cmd: python -m CustomerChurn.pipeline.stage_03_data_preprocessing
+    deps:
+      - src/CustomerChurn/pipeline/stage_03_data_preprocessing.py
+      - artifacts/data_ingestion/telcoChurn.csv
+    outs:
+      - artifacts/data_preprocessing/cleaned_data.csv
+
+  data_transformation:
+    cmd: python -m CustomerChurn.pipeline.stage_04_data_transformation
+    deps:
+      - src/CustomerChurn/pipeline/stage_04_data_transformation.py
+      - artifacts/data_preprocessing/cleaned_data.csv
+      - params.yaml
+    outs:
+      - artifacts/data_transformation/train.csv
+      - artifacts/data_transformation/test.csv
+
+  model_trainer:
+    cmd: python -m CustomerChurn.pipeline.stage_05_model_trainer
+    deps:
+      - src/CustomerChurn/pipeline/stage_05_model_trainer.py
+      - artifacts/data_transformation/train.csv
+      - artifacts/data_transformation/test.csv
+      - params.yaml
+    outs:
+      - artifacts/model_trainer/model.joblib
+
+  model_evaluation:
+    cmd: python -m CustomerChurn.pipeline.stage_06_model_evaluation
+    deps:
+      - src/CustomerChurn/pipeline/stage_06_model_evaluation.py
+      - artifacts/data_transformation/test.csv
+      - artifacts/model_trainer/model.joblib
+    outs:
+      - artifacts/model_evaluation/metrics.json
+      - artifacts/model_evaluation/confusion_matrix.png
+      - artifacts/model_evaluation/roc_curve.png

@@ -1,12 +1,14 @@
 from pathlib import Path 
 import os
 import pandas as pd 
-from sklearn.metrics import accuracy_score, f1_score, recall_score, roc_auc_score, confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import accuracy_score, f1_score, recall_score, roc_auc_score, confusion_matrix, ConfusionMatrixDisplay, RocCurveDisplay
 import joblib
+import mlflow
 import matplotlib.pyplot as plt
 from CustomerChurn.entity.config_entity import ModelEvaluationConfig
 from CustomerChurn.utils.common import save_json
 from CustomerChurn import logger
+from CustomerChurn.utils.mlflow import setup_mlflow
 
 class ModelEvaluation:
     def __init__(self, config: ModelEvaluationConfig):
@@ -20,6 +22,7 @@ class ModelEvaluation:
         """
         
         self.config = config
+        setup_mlflow()
 
     def eval_metrics(self, actual, pred, proba):
         """
@@ -100,15 +103,24 @@ class ModelEvaluation:
         cm = confusion_matrix(y_test, y_pred)
         disp = ConfusionMatrixDisplay(confusion_matrix=cm)
         disp.plot(cmap=plt.cm.Blues)
+        cm_path = os.path.join(self.config.root_dir, "confusion_matrix.png")
         plt.title("Confusion Matrix")
-        plt.savefig(os.path.join(self.config.root_dir, "confusion_matrix.png"))
+        plt.savefig(cm_path)
         plt.close()
 
         # ROC Curve
-        from sklearn.metrics import RocCurveDisplay
         RocCurveDisplay.from_predictions(y_test, y_proba)
+        roc_path = os.path.join(self.config.root_dir, "roc_curve.png")
         plt.title("ROC Curve")
-        plt.savefig(os.path.join(self.config.root_dir, "roc_curve.png"))
+        plt.savefig(roc_path)
         plt.close()
 
         logger.info("Evaluation metrics and visualizations saved successfully.")
+
+        with mlflow.start_run(run_name="model_evaluation"):
+            mlflow.log_metrics(scores)
+            mlflow.log_artifact(self.config.metric_file_name)
+            mlflow.log_artifact(cm_path)
+            mlflow.log_artifact(roc_path)
+            mlflow.log_param("target_column", self.config.target_column)
+            mlflow.log_param("test_data_rows", len(X_test))

@@ -3,7 +3,7 @@ pandas
 numpy
 scikit-learn
 xgboost
-imbalance-learn
+imbalanced-learn
 matplotlib
 seaborn
 python-dotenv
@@ -16,4 +16,8 @@ joblib
 types-pyYAML
 Flask
 Flask-Cors
+dvc
+mlflow
+dagshub
+
 -e .
