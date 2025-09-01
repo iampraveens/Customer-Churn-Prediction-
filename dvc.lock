@@ -101,6 +101,10 @@ stages:
       hash: md5
       md5: dbfb973b2bcb861bd6ba25a9537357f1
       size: 1586687
+    - path: saved_models/model.joblib
+      hash: md5
+      md5: dbfb973b2bcb861bd6ba25a9537357f1
+      size: 1586687
   model_evaluation:
     cmd: python -m CustomerChurn.pipeline.stage_06_model_evaluation
     deps:

@@ -43,6 +43,9 @@ stages:
       - params.yaml
     outs:
       - artifacts/model_trainer/model.joblib
+      - saved_models/model.joblib:
+          persist: true
+          cache: false
 
   model_evaluation:
     cmd: python -m CustomerChurn.pipeline.stage_06_model_evaluation

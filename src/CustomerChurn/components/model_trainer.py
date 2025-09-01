@@ -54,7 +54,13 @@ class ModelTrainer:
 
         with mlflow.start_run():
             model.fit(X_train, y_train)
-            joblib.dump(model, os.path.join(self.config.root_dir, self.config.model_name))
+            dvc_model_path = os.path.join(self.config.root_dir, self.config.model_name)
+            joblib.dump(model, dvc_model_path)
+
+            os.makedirs("saved_models", exist_ok=True)
+            git_model_path = os.path.join("saved_models", self.config.model_name)
+            joblib.dump(model, git_model_path)
+
             logger.info(f"{model_name} model trained and saved successfully.")
 
             mlflow.log_param("chosen_model", model_name)
