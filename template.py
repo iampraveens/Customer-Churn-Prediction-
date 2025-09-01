@@ -32,10 +32,13 @@ list_of_files = [
     "app.py",
     "requirements.txt",
     "setup.py",
+    "Procfile",
     "research/experiments.ipynb",
     "research/trials.ipynb",
     "templates/index.html",
-    "templates/result.html"
+    "templates/result.html",
+    "static/css/style.css",
+    "static/js/script.js",
 ]
 
 def create_project_structure(files):

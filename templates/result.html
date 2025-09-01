@@ -1,0 +1,31 @@
+<!-- filepath: d:\AI Personal Projects\Machine Learning Projects\Customer-Churn-Prediction-\templates\result.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="app-header">
+        <h1>Prediction Result</h1>
+    </header>
+
+    <main class="container modern-container">
+        <div class="result-card">
+            {% if "not" in prediction.lower() %}
+                <p class="result-success">{{ prediction }}</p>
+            {% else %}
+                <p class="result-danger">{{ prediction }}</p>
+            {% endif %}
+
+            <p class="probability">
+                Churn Probability: <strong>{{ probability }}</strong>
+            </p>
+
+            <a href="/" class="modern-btn">Make Another Prediction</a>
+        </div>
+    </main>
+</body>
+</html>
