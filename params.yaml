@@ -1,5 +1,5 @@
 DataTransformation:
-  balancing_method: 'ADASYN'  # Options: 'SMOTEENN', 'ADASYN'
+  balancing_method: 'SMOTEENN'  # Options: 'SMOTEENN', 'ADASYN'
 
 ModelTrainer:
   model: 'XGBClassifier'  # Options: 'LogisticRegression', 'RandomForestClassifier', 'XGBClassifier'
