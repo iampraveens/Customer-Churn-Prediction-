@@ -1,5 +1,7 @@
 # 📊 Customer Churn Prediction
 
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/) [![scikit-learn](https://img.shields.io/badge/scikitLearn-1.5.1-green.svg)](https://opensource.org/licenses/MIT) [![MLflow](https://img.shields.io/badge/MLflow-3.3.2-blueviolet.svg)](https://mlflow.org/) [![DVC](https://img.shields.io/badge/DVC-3.62.0-orange.svg)](https://dvc.org/) [![DagsHub](https://img.shields.io/badge/DagsHub-0.6.3-red.svg)](https://dvc.org/)
+
 A complete **end-to-end machine learning project** that predicts customer churn for a telecom company. The project includes **data pipelines with DVC**, **experiment tracking with MLflow/DagsHub**, and a **Flask web application** for real-time churn prediction.
 
 ## 🚀 Project Overview
@@ -229,6 +231,7 @@ iampraveens-customer-churn-prediction-/
     ├── config
     └── .gitignore
 ```
+
 ---
 
 ## 📦 Dependencies
